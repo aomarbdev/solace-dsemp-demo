@@ -1,6 +1,7 @@
 name: Terraform Workflow
 
 on:
+  # Trigger on push to the main branch or a pull request
   push:
     branches:
       - main
@@ -8,9 +9,17 @@ on:
     branches:
       - main
 
+  # Manually trigger destroy
+  workflow_dispatch:
+    inputs:
+      destroy:
+        description: "Run terraform destroy before apply"
+        required: false
+        default: "false"
+
 jobs:
   terraform:
-    name: Apply Terraform configuration
+    name: Apply Terraform Configuration
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +37,14 @@ jobs:
     - name: Validate Terraform
       run: terraform validate
 
+    - name: Conditional Terraform Destroy
+      if: github.event.inputs.destroy == 'true'   # Only run if manual input triggers destroy
+      run: terraform destroy -auto-approve
+      env:
+        TF_VAR_username: ${{ secrets.SOLACE_USERNAME }}
+        TF_VAR_password: ${{ secrets.SOLACE_PASSWORD }}
+        TF_VAR_url: ${{ secrets.SOLACE_URL }}
+
     - name: Plan Terraform deployment
       run: terraform plan
 
@@ -37,4 +54,3 @@ jobs:
         TF_VAR_username: ${{ secrets.SOLACE_USERNAME }}
         TF_VAR_password: ${{ secrets.SOLACE_PASSWORD }}
         TF_VAR_url: ${{ secrets.SOLACE_URL }}
-
