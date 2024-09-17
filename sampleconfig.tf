@@ -5,13 +5,6 @@ terraform {
     }
   }
 }
-/*
-module "queue-endpoint" {
-  source  = "SolaceProducts/queue-endpoint/solacebroker"
-  version = "1.0.0"
-  # insert the 4 required variables here
-}
-*/
 
 
 # Configure the   provider
@@ -99,7 +92,7 @@ module "queue_with_topic_subscriptions" {
   # this will add the listed subscriptions to the queue
   queue_subscription_topics = ["demo/danone/event3", "demo/danone/event4"]
 }
-*/
+
 
 resource "solacebroker_msg_vpn_client_profile" "bar" {
   msg_vpn_name        = "solace-demo"
@@ -125,7 +118,6 @@ resource "solacebroker_msg_vpn_client_profile" "bar2" {
   }
 }
 
-/*
 resource "solacebroker_msg_vpn_client_profile" "bar3" {
   msg_vpn_name        = "solace-demo"
   client_profile_name = "factory"
@@ -133,7 +125,6 @@ resource "solacebroker_msg_vpn_client_profile" "bar3" {
     create_before_destroy = true
   }
 }
-*/
 
 resource "solacebroker_msg_vpn_client_username" "username" {
   msg_vpn_name        = "solace-demo"
@@ -162,3 +153,4 @@ resource "solacebroker_msg_vpn_client_username" "username3" {
   client_profile_name = solacebroker_msg_vpn_client_profile.bar2.client_profile_name
   enabled             = true
 }
+*/
