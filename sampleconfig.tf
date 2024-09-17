@@ -16,9 +16,22 @@ module "queue-endpoint" {
 
 # Configure the   provider
 provider "solacebroker" {
-  username = "solace-demo-admin"
-  password = "mif0df790snl4agrs9n14umtks"
-  url      = "https://mr-connection-gjywy1wv6ri.messaging.solace.cloud:943"
+  username = var.username
+  password = var.password
+  url      = var.url
+}
+
+# Define input variables
+variable "username" {
+  type = string
+}
+
+variable "password" {
+  type = string
+}
+
+variable "url" {
+  type = string
 }
 
 # Create a messaging queue
